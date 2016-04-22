@@ -1,13 +1,17 @@
 #! /bin/bash
 
-# Este foi desenvolvido por David Alain
+# Este script foi desenvolvido por David Alain. https://github.com/davidalain/monitorInternetModemPACE .
 
-# ==== Variáveis ====
+# Pré-requisitos para executar este script:
+# 1- Estar executando um sistema operacional Linux em seu PC.
+# 2- Ter o sshpass instalado no seu Linux.
+# 3- Ter o modem PACE v5471 com um firmware da TripleOxigen versão 42K instalada no modem.
+# 4- Estar com o servidor SSH habilitado no modem.
+
+# ==== Variáveis globais do script ====
 globalIP=""
-
 dslStatus=""
 pppStatus=""
-
 currentSpeedDown=""
 currentSpeedUp=""
 maxSpeedDown=""
@@ -15,16 +19,14 @@ maxSpeedUp=""
 snrUp=""
 snrDown=""
 dateTime=""
-
-delayTime=8
-
 csvLine=""
+delayTime=8
 
 workingPath="relatorioInternetGVT/"
 csvFileOut="estatisticas.csv"
 csvHeaderOut="cabecalhoEstatisticas.csv"
 
-# ===================
+# ====== Funções =============
 
 printHeader(){
 	# Gera o arquivo de cabeçalho
@@ -74,7 +76,7 @@ gerarRelatorio(){
 		globalIP=$(cat status.txt | tail -n10 | grep "addr:" | awk '{print $2}' | tr ":" " " | awk '{print $2}')
 		#echo "globalIP=$globalIP"
 
-		# Se estava com internet, então não precisa monitorar com muita frequência, uma amostra a cada 10 segundos é suficiente. Leva-se 2 segundos para cada medição.
+		# Se estava com internet, então não precisa monitorar com muita frequência, uma amostra a cada 10 segundos é suficiente. Leva-se cerca 2 segundos para cada medição.
 		delayTime=8
 	else
 
@@ -86,7 +88,7 @@ gerarRelatorio(){
 		globalIP=""
 		#echo "globalIP=$globalIP" 
 
-		# Estava sem internet, então precisa monitorar com muita frequência, uma amostra a cada 5 segundos é o recomendado. Leva-se 2 segundos para cada medição.
+		# Estava sem internet, então precisa monitorar com muita frequência, uma amostra a cada 5 segundos é o recomendado. Leva-se cerca 2 segundos para cada medição.
 		delayTime=3
 	fi
 
