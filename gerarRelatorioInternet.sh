@@ -6,7 +6,10 @@
 # 1- Estar executando um sistema operacional Linux em seu PC.
 # 2- Ter o sshpass instalado no seu Linux.
 # 3- Ter o modem PACE v5471 com um firmware da TripleOxigen versão 42K instalada no modem.
-# 4- Estar com o servidor SSH habilitado no modem.
+# 4- Estar com o modem configurado para utilizar a subrede 192.168.25.1/24
+# 5- Estar com o computador conectado à rede do modem.
+# 6- Estar com o servidor SSH habilitado no modem.
+# 7- Ter acessado o modem via SSH pelo menos uma vez (para que se tenha guardado as chaves SSH).
 
 # ==== Variáveis globais do script ====
 globalIP=""
