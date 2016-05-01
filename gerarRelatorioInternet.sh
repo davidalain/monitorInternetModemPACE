@@ -132,7 +132,6 @@ gerarRelatorio(){
 	if [ $pppStatus == "UP" ] ; then
 		# Está online, imprime a cada 1 minuto aproximadamente no arquivo CSV
 		upConnectionCount=$(($upConnectionCount+1))
-		echo "upConnectionCount=$upConnectionCount"
 		if [ $upConnectionCount -eq 6 ] ; then
 			echo $csvLine >> $csvFileOut
 		fi
