@@ -24,8 +24,10 @@ snrDown=""
 dateTime=""
 csvLine=""
 delayTime=8
+upConnectionCount=0
 
-workingPath="relatorioInternetGVT/"
+workingDir="relatorioInternetGVT"
+workingPath="/home/$USER/$workingDir/"
 csvFileOut="estatisticas.csv"
 csvHeaderOut="cabecalhoEstatisticas.csv"
 
@@ -38,7 +40,6 @@ printHeader(){
 
 init(){
 	# Entra no diretório de trabalho
-	cd ~
 	mkdir -p $workingPath
 	cd $workingPath
 	echo "Diretório atual: $(pwd)"
@@ -56,7 +57,7 @@ gerarRelatorio(){
 	sshpass -p "toor" ssh root@192.168.25.1 '( /home/diag/usr/bin/xdslinfo && /home/diag/bin/ifconfig ppp1 )' > status.txt
 
 	# Pega o horário atual
-	dateTime=$(date)
+	dateTime=$(date +"%a %d/%m/%y %R:%S %z")
 	#echo "dateTime=$dateTime"
 
 	# Pega o status do DSL
@@ -128,11 +129,30 @@ gerarRelatorio(){
 	printHeader
 	echo $csvLine
 
-	echo $csvLine >> $csvFileOut
+	if [ $pppStatus == "UP" ] ; then
+		# Está online, imprime a cada 1 minuto aproximadamente no arquivo CSV
+		upConnectionCount=$(($upConnectionCount+1))
+		echo "upConnectionCount=$upConnectionCount"
+		if [ $upConnectionCount -eq 6 ] ; then
+			echo $csvLine >> $csvFileOut
+		fi
+	
+	else
+		# Está offline, imprime o status no arquivo CSV
+		upConnectionCount=0
+		echo $csvLine >> $csvFileOut
+	fi
+
 }
 
 # ========== Código principal (main) ===============
 
+if [ -z $1 ] ; then
+	echo "Nenhum caminho foi passado. Será utilizado o caminho padrão."
+else
+	workingPath=$1
+	echo "Utilizando o caminho $workingPath"
+fi
 
 init
 
