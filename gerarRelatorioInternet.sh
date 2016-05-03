@@ -134,12 +134,13 @@ gerarRelatorio(){
 		upConnectionCount=$(($upConnectionCount+1))
 		if [ $upConnectionCount -eq 6 ] ; then
 			echo $csvLine >> $csvFileOut
+			upConnectionCount=0
 		fi
 	
 	else
 		# Está offline, imprime o status no arquivo CSV
-		upConnectionCount=0
 		echo $csvLine >> $csvFileOut
+		upConnectionCount=0
 	fi
 
 }
