@@ -9,7 +9,7 @@
 # 4- Estar com o modem configurado para utilizar a subrede 192.168.25.1/24
 # 5- Estar com o computador conectado à rede do modem.
 # 6- Estar com o servidor SSH habilitado no modem.
-# 7- Ter acessado o modem via SSH pelo menos uma vez (para que se tenha guardado as chaves SSH).
+# 7- Ter acessado o modem via SSH pelo menos uma vez (para que já tenha guardado as chaves SSH em seu computador).
 
 # ==== Variáveis globais do script ====
 globalIP=""
