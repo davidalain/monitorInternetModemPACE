@@ -22,20 +22,37 @@ maxSpeedUp=""
 snrUp=""
 snrDown=""
 dateTime=""
+localFEC=""
+remoteFEC=""
+
 csvLine=""
 delayTime=8
 upConnectionCount=0
 
-workingDir="relatorioInternetGVT"
+
+workingDir="relatorioInternet"
 workingPath="/home/$USER/$workingDir/"
 csvFileOut="estatisticas.csv"
 csvHeaderOut="cabecalhoEstatisticas.csv"
 
 # ====== Funções =============
 
+usage(){
+	echo "Forma de uso:"
+	echo
+	echo "	./monitor.sh <PATH>"
+	echo
+	echo "Em que <PATH> é o caminho onde será salvo o arquivo CSV com os dados extraídos."
+	echo "Caso nenhum caminho seja informado, será utilizado o caminho padrão: $workingPath"
+	echo
+	echo "Caso queira salvar o arquivo CSV na pasta atual, execute:"
+	echo "	./monitor.sh ."
+	echo
+}
+
 printHeader(){
 	# Gera o arquivo de cabeçalho
-	echo "dateTime,dslStatus,pppStatus,globalIP,maxSpeedDown[Kbps],maxSpeedUp[Kbps],currentSpeedDown[Kbps],currentSpeedUp[Kbps],snrDown[dB],snrUp[dB],outputPowerDown[dBm],outputPowerUp[dBm]"
+	echo "dateTime,dslStatus,pppStatus,globalIP,maxSpeedDown[Kbps],maxSpeedUp[Kbps],currentSpeedDown[Kbps],currentSpeedUp[Kbps],snrDown[dB],snrUp[dB],outputPowerDown[dBm],outputPowerUp[dBm],localFEC,remoteFEC"
 }
 
 init(){
@@ -124,8 +141,14 @@ gerarRelatorio(){
 	outputPowerUp=$(cat status.txt | grep "up output power" | awk '{print $6}')
 	#echo "outputPowerUp=$outputPowerUp"
 
+	localFEC=$(cat status.txt | grep "local FECs" | awk '{print $4}')
+	#echo "localFEC=$localFEC"
 
-	csvLine="$dateTime,$dslStatus,$pppStatus,$globalIP,$maxSpeedDown,$maxSpeedUp,$currentSpeedDown,$currentSpeedUp,$snrDown,$snrUp,$outputPowerDown,$outputPowerUp"
+	remoteFEC=$(cat status.txt | grep "remote FECs" | awk '{print $4}')
+	#echo "remoteFEC=$remoteFEC"
+
+
+	csvLine="$dateTime,$dslStatus,$pppStatus,$globalIP,$maxSpeedDown,$maxSpeedUp,$currentSpeedDown,$currentSpeedUp,$snrDown,$snrUp,$outputPowerDown,$outputPowerUp,$localFEC,$remoteFEC"
 	printHeader
 	echo $csvLine
 
@@ -150,8 +173,14 @@ gerarRelatorio(){
 if [ -z $1 ] ; then
 	echo "Nenhum caminho foi passado. Será utilizado o caminho padrão."
 else
-	workingPath=$1
-	echo "Utilizando o caminho $workingPath"
+
+	if [ $1 == "--help" ] ; then
+		usage
+		exit
+	else
+		workingPath=$1
+		echo "Utilizando o caminho $workingPath"
+	fi
 fi
 
 init
