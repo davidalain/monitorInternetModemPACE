@@ -17,4 +17,6 @@ São capturados os seguintes dados:
 + **snrUp[dB]:** Relação Sinal/Ruído (SNR) do sinal de upload.
 + **outputPowerDown[dBm]:** Potência de saída do sinal de download.
 + **outputPowerUp[dBm]:** Potência de saída do sinal de upload.
++ **localFEC:** Quantidade de FECs local.
++ **remoteFEC:** Quantidade de FECs remoto.
 
