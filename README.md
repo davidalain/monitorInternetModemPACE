@@ -5,7 +5,7 @@ Estes códigos capturam informações da conexão e salvam essas informações e
 
 São capturados os seguintes dados:
 
-+ **dateTime:** Data e hora da medição.
++ **dateTime:** Data e hora da medição/captura.
 + **dslStatus:** Status do DSL (conectado ou desconectado).
 + **pppStatus:** Status da autenticação via PPP (conectado ou desconectado).
 + **globalIP:** IP válido fornecido pela operadora.
