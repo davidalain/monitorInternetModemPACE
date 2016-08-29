@@ -1,4 +1,4 @@
-# monitorInternetModemPACE
+# Monitor de Internet Modem PACE v5471
 
 #### Códigos em shell para monitoramento do status da conexão com a internet no modem PACE v5471.
 Estes códigos capturam informações da conexão e salvam essas informações em um arquivo CSV para extração de informações e/ou interpretação dos dados de maneira gráfica. ####
